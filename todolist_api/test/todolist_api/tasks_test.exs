@@ -8,7 +8,7 @@ defmodule TodolistApi.TasksTest do
 
     import TodolistApi.TasksFixtures
 
-    @invalid_attrs %{id: nil, description: nil, is_completed: nil, created_on: nil, modified_on: nil, deleted_on: nil, custom_order: nil}
+    @invalid_attrs %{description: nil, is_completed: nil, deleted_on: nil, custom_order: nil}
 
     test "list_tasks/0 returns all tasks" do
       task = task_fixture()
@@ -21,15 +21,12 @@ defmodule TodolistApi.TasksTest do
     end
 
     test "create_task/1 with valid data creates a task" do
-      valid_attrs = %{id: 42, description: "some description", is_completed: true, created_on: ~N[2024-09-08 07:22:00], modified_on: ~N[2024-09-08 07:22:00], deleted_on: ~N[2024-09-08 07:22:00], custom_order: 42}
+      valid_attrs = %{description: "some description", is_completed: true, deleted_on: ~N[2024-09-08 07:56:00], custom_order: 42}
 
       assert {:ok, %Task{} = task} = Tasks.create_task(valid_attrs)
-      assert task.id == 42
       assert task.description == "some description"
       assert task.is_completed == true
-      assert task.created_on == ~N[2024-09-08 07:22:00]
-      assert task.modified_on == ~N[2024-09-08 07:22:00]
-      assert task.deleted_on == ~N[2024-09-08 07:22:00]
+      assert task.deleted_on == ~N[2024-09-08 07:56:00]
       assert task.custom_order == 42
     end
 
@@ -39,15 +36,12 @@ defmodule TodolistApi.TasksTest do
 
     test "update_task/2 with valid data updates the task" do
       task = task_fixture()
-      update_attrs = %{id: 43, description: "some updated description", is_completed: false, created_on: ~N[2024-09-09 07:22:00], modified_on: ~N[2024-09-09 07:22:00], deleted_on: ~N[2024-09-09 07:22:00], custom_order: 43}
+      update_attrs = %{description: "some updated description", is_completed: false, deleted_on: ~N[2024-09-09 07:56:00], custom_order: 43}
 
       assert {:ok, %Task{} = task} = Tasks.update_task(task, update_attrs)
-      assert task.id == 43
       assert task.description == "some updated description"
       assert task.is_completed == false
-      assert task.created_on == ~N[2024-09-09 07:22:00]
-      assert task.modified_on == ~N[2024-09-09 07:22:00]
-      assert task.deleted_on == ~N[2024-09-09 07:22:00]
+      assert task.deleted_on == ~N[2024-09-09 07:56:00]
       assert task.custom_order == 43
     end
 
