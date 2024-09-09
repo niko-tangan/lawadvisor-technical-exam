@@ -1,10 +1,11 @@
 # LawAdvisor Technical Exam
 Technical Exam for LawAdvisor by Anton Nikolai Regis Tangan
 
-# September 9, Monday
-Hi, I'm treating this initial README as somewhat of a dev log just to explain my thought processes and as a better way to personally track my day-to-day progress. I'll probably move this somewhere else when the API is done so that there's an actual, proper README here.
+## September 9, Monday
+Hi, I'm treating this initial README as somewhat of a dev log just to explain my thought processes and as a better way to personally track my day-to-day progress. I'll probably move this somewhere else once the API is done so that there's an actual, proper README with instructions here.
 
-I'll also be using this as a chance to start learning Elixir and Phoenix, since if I get the job with LawAdvisor I'd need to learn them anyway.
+I'll be using Elixir and Phoenix to make this, since if I get the job with LawAdvisor I'd need to learn them anyway.
+I'll also using sqlite as the database.
 
 ## TODO
 
@@ -29,12 +30,12 @@ So to make a checklist for what needs to be done it's just a todo list API (endp
 ## Notes
 
 ### Task/TodoListItem (maybe task is the better name)
-- id
-- description
-- status (completed/not completed)
+- id (auto increment)
+- description (string, default "")
+- is_completed (bool, default False)
 - deleted_on (if soft deleting is implemented)
-- created_on
-- modified_on
+- inserted_on
+- updated_on
 - custom_order (default to id)
 
 ### How custom order could work
@@ -58,3 +59,12 @@ set id 4 to pos 1
 [1, 4) = 1,2,3 + 1
 4 0 1 3 2
 1 2 3 4 5
+
+
+## Commands to Run
+mix local.hex - install hex (dependency manager)
+mix archive.install hex phx_new - phoenix project generator
+mix phx.new todolist-api - new phoenix project
+mix phx.gen.context Tasks Task tasks description:string is_completed:boolean deleted_on:naive_datetime custom_order:integer - generate crud
+mix ecto.migrate
+mix hex.docs offline elixir
