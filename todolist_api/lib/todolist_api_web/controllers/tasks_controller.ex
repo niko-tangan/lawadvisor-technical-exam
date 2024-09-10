@@ -6,4 +6,9 @@ defmodule TodolistApiWeb.TasksController do
 		tasks = %{tasks: Tasks.list_tasks()}
 		render(conn, :index, tasks)
 	end
+
+	def ordered_tasks(conn, _params) do
+		tasks = %{tasks: Tasks.list_ordered_tasks()}
+		render(conn, :index, tasks)
+	end
 end

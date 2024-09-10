@@ -22,6 +22,19 @@ defmodule TodolistApi.Tasks do
   end
 
   @doc """
+  Returns the ordered list of tasks.
+
+  ## Examples
+
+      iex> list_ordered_tasks()
+      [%Task{}, ...]
+
+  """
+  def list_ordered_tasks do
+    Repo.all(from t in Task, order_by: t.custom_order)
+  end
+
+  @doc """
   Gets a single task.
 
   Raises `Ecto.NoResultsError` if the Task does not exist.

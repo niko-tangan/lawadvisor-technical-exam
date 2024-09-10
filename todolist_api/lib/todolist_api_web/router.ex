@@ -24,6 +24,7 @@ defmodule TodolistApiWeb.Router do
   scope "/api", TodolistApiWeb do
     pipe_through :api
     get "/tasks", TasksController, :index
+    get "/ordered_tasks", TasksController, :ordered_tasks
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
