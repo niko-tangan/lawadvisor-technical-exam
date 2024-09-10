@@ -12,7 +12,7 @@ defmodule TodolistApi.TasksFixtures do
       attrs
       |> Enum.into(%{
         custom_order: 42,
-        deleted_on: ~N[2024-09-08 07:56:00],
+        deleted_at: ~N[2024-09-08 07:56:00],
         description: "some description",
         is_completed: true
       })
