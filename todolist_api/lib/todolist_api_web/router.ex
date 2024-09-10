@@ -23,7 +23,7 @@ defmodule TodolistApiWeb.Router do
   # Other scopes may use custom stacks.
   scope "/api", TodolistApiWeb do
     pipe_through :api
-    get "/quotes", QuotesController, :index
+    get "/tasks", TasksController, :index
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development

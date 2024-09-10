@@ -7,8 +7,12 @@ defmodule TodolistApiWeb.TasksJSON do
 
 	defp data(%Task{} = datum) do
 		%{
+			id: datum.id,
 			description: datum.description,
-			custom_id: datum.custom_id,
+			custom_order: datum.custom_order,
+			inserted_at: datum.inserted_at,
+			updated_at: datum.updated_at,
+			deleted_at: datum.deleted_at
 		}
 	end
 end
