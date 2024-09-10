@@ -9,3 +9,7 @@ erl_crash.dump
 /config/*.secret.exs
 .elixir_ls/
 .vscode/settings.json
+*.db
+*.db-*
+*.sqlite
+*.sqlite-*
