@@ -5,8 +5,8 @@ defmodule TodolistApi.Repo.Migrations.CreateTasks do
     create table(:tasks) do
       add :description, :string
       add :is_completed, :boolean, default: false, null: false
-      add :deleted_at, :naive_datetime, null: true
       add :custom_order, :integer
+      add :deleted_at, :utc_datetime, null: true
 
       timestamps(type: :utc_datetime)
     end
