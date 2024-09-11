@@ -45,4 +45,12 @@ defmodule TodolistApiWeb.TaskController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  def reorder(conn, %{"id" => id, "new_custom_order" => new_custom_order}) do
+    task = Tasks.get_task!(id)
+
+    with {:ok, %Task{} = task} <- Tasks.reorder_task(task, new_custom_order) do
+      render(conn, :show, task: task)
+    end
+  end
 end

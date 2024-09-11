@@ -115,4 +115,23 @@ defmodule TodolistApi.Tasks do
   def change_task(%Task{} = task, attrs \\ %{}) do
     Task.changeset(task, attrs)
   end
+
+  def reorder_task(%Task{} = task, new_custom_order) do
+    new_custom_order = String.to_integer(new_custom_order)
+    increment = if new_custom_order > task.custom_order do -1 else 1 end
+    query = if new_custom_order > task.custom_order do
+      from(t in Task, where: t.custom_order > ^task.custom_order and t.custom_order <= ^new_custom_order)
+    else
+      from(t in Task, where: t.custom_order >= ^new_custom_order and t.custom_order < ^task.custom_order)
+    end
+
+    query
+    |> update(inc: [custom_order: ^increment], set: [updated_at: ^DateTime.utc_now()])
+    |> Repo.update_all([])
+
+    update_task(task, %{custom_order: new_custom_order})
+    # task
+    # |> Task.changeset(%{custom_order: new_custom_order})
+    # |> Repo.update()
+  end
 end

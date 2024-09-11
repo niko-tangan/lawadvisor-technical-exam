@@ -24,6 +24,7 @@ defmodule TodolistApiWeb.Router do
     pipe_through :api
     resources "/tasks", TaskController
     get "/ordered_tasks", TaskController, :ordered_tasks
+    post "/tasks/:id/reorder/:new_custom_order", TaskController, :reorder
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
