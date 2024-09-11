@@ -13,3 +13,6 @@ erl_crash.dump
 *.db-*
 *.sqlite
 *.sqlite-*
+*_test
+*-shm
+*-wal
