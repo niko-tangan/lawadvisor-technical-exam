@@ -31,7 +31,7 @@ defmodule TodolistApi.Tasks do
 
   """
   def list_ordered_tasks do
-    Repo.all(from t in Task, order_by: t.custom_order)
+    Repo.all(from t in Task, order_by: [t.custom_order, t.id])
   end
 
   @doc """
