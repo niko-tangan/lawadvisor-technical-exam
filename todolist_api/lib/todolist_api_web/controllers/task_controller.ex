@@ -8,8 +8,7 @@ defmodule TodolistApiWeb.TaskController do
 
   def index(conn, _params) do
     tasks = Tasks.list_tasks()
-    # render(conn, :index, tasks: tasks)
-    json(conn, %{tasks: tasks})
+    render(conn, :index, tasks: tasks)
   end
 
   def ordered_tasks(conn, _params) do
