@@ -65,6 +65,7 @@ defmodule TodolistApi.Tasks do
   def create_task(attrs \\ %{}) do
     %Task{}
     |> Task.changeset(attrs)
+    |> Task.set_custom_order_if_missing()
     |> Repo.insert()
   end
 
