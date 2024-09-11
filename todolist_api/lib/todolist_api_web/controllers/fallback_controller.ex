@@ -6,6 +6,13 @@ defmodule TodolistApiWeb.FallbackController do
   """
   use TodolistApiWeb, :controller
 
+  def call(conn, {:error, %Ecto.Changeset{} = changeset}) do
+    conn
+    |> put_status(:unprocessable_entity)
+    |> put_view(json: TodolistApiWeb.ChangesetJSON)
+    |> render(:error, changeset: changeset)
+  end
+
   # This clause is an example of how to handle resources that cannot be found.
   def call(conn, {:error, :not_found}) do
     conn
