@@ -16,15 +16,14 @@ defmodule TodolistApiWeb.Router do
 
   scope "/", TodolistApiWeb do
     pipe_through :browser
-
     get "/", PageController, :home
   end
 
   # Other scopes may use custom stacks.
   scope "/api", TodolistApiWeb do
     pipe_through :api
-    get "/tasks", TasksController, :index
-    get "/ordered_tasks", TasksController, :ordered_tasks
+    resources "/tasks", TaskController
+    get "/ordered_tasks", TaskController, :ordered_tasks
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
