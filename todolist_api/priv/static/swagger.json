@@ -1,0 +1,131 @@
+{
+  "paths": {
+    "/api/tasks/{id}": {
+      "get": {
+        "tags": [
+          "Task"
+        ],
+        "summary": "Lists a Task with a given ID",
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Task"
+            },
+            "description": "Ok"
+          }
+        },
+        "parameters": [
+          {
+            "x-example": 3,
+            "type": "integer",
+            "required": true,
+            "name": "id",
+            "in": "path",
+            "description": "Task ID"
+          }
+        ],
+        "operationId": "TodolistApiWeb.TaskController.show",
+        "description": "Lists a Task with a given ID"
+      }
+    },
+    "/api/tasks": {
+      "get": {
+        "tags": [
+          "Task"
+        ],
+        "summary": "List all Tasks",
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Tasks"
+            },
+            "description": "Ok"
+          }
+        },
+        "parameters": [],
+        "operationId": "TodolistApiWeb.TaskController.index",
+        "description": "List all Tasks"
+      }
+    }
+  },
+  "swagger": "2.0",
+  "definitions": {
+    "Error": {
+      "type": "object",
+      "title": "Errors",
+      "required": [
+        "error"
+      ],
+      "properties": {
+        "error": {
+          "type": "string",
+          "description": "The message of the error raised"
+        }
+      },
+      "description": "Error responses from the ToDo List API"
+    },
+    "Tasks": {
+      "type": "array",
+      "title": "Tasks",
+      "items": {
+        "$ref": "#/definitions/Task"
+      },
+      "description": "All tasks"
+    },
+    "Task": {
+      "type": "object",
+      "title": "Task",
+      "required": [
+        "is_completed",
+        "description"
+      ],
+      "properties": {
+        "updated_at": {
+          "type": "string",
+          "format": "ISO-8601",
+          "description": "When the Task was last updated"
+        },
+        "is_completed": {
+          "type": "boolean",
+          "description": "Whether the Task is completed or not"
+        },
+        "inserted_at": {
+          "type": "string",
+          "format": "ISO-8601",
+          "description": "When the Task was initially inserted"
+        },
+        "id": {
+          "type": "integer",
+          "description": "The ID of the Task"
+        },
+        "description": {
+          "type": "string",
+          "description": "The description of the Task"
+        },
+        "deleted_at": {
+          "type": "string",
+          "format": "ISO-8601",
+          "description": "When the Task was completed"
+        },
+        "custom_order": {
+          "type": "integer",
+          "description": "The custom order of the Task"
+        }
+      },
+      "example": {
+        "data": {
+          "is_completed": false,
+          "description": "Sample Task Description",
+          "custom_order": 17
+        }
+      },
+      "description": "A Task on the ToDo List"
+    }
+  },
+  "host": "localhost:4000",
+  "info": {
+    "title": "Todo List API",
+    "host": "localhost:4000",
+    "version": "1.0"
+  }
+}

@@ -27,6 +27,10 @@ defmodule TodolistApiWeb.Router do
     post "/tasks/:id/reorder/:new_custom_order", TaskController, :reorder
   end
 
+  scope "/api/swagger" do
+    forward "/", PhoenixSwagger.Plug.SwaggerUI, otp_app: :todolist_api, swagger_file: "swagger.json"
+  end
+
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:todolist_api, :dev_routes) do
     # If you want to use the LiveDashboard in production, you should put
@@ -42,5 +46,15 @@ defmodule TodolistApiWeb.Router do
       live_dashboard "/dashboard", metrics: TodolistApiWeb.Telemetry
       forward "/mailbox", Plug.Swoosh.MailboxPreview
     end
+  end
+
+  def swagger_info do
+    %{
+      info: %{
+        version: "1.0",
+        title: "Todo List API",
+        host: "localhost:4000"
+      }
+    }
   end
 end
