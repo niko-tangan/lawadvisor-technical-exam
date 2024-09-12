@@ -1,70 +1,71 @@
 # LawAdvisor Technical Exam
 Technical Exam for LawAdvisor by Anton Nikolai Regis Tangan
 
-## September 9, Monday
-Hi, I'm treating this initial README as somewhat of a dev log just to explain my thought processes and as a better way to personally track my day-to-day progress. I'll probably move this somewhere else once the API is done so that there's an actual, proper README with instructions here.
+#### Table of Contents  
+[Summary](#summary)  
+[Starting the Server](#starting-the-server)  
+[Important Routes](#important-routes)  
+[Checklist](#checklist)  
+[Issues Encountered](#issues-encountered)  
+[Future Improvements](#future-improvements)
+[Notes on the Reorder Endpoint](#notes-on-the-reorder-endpoint)  
+[Additional Notes](#additional-notes)
 
-I'll be using Elixir and Phoenix to make this, since if I get the job with LawAdvisor I'd need to learn them anyway.
-I'll also using sqlite as the database.
 
-## TODO
+## Summary
+This is an API for a ToDo List meant to serve as an engineering test for LawAdvisor.
+No specific programming language was specified, so the stack chosen was Elxir, specifically, the Phoenix Framework, and sqlite for the database. 
 
-So to make a checklist for what needs to be done it's just a todo list API (endpoints should return JSON)
+Phoenix was chosen as it is already being used by LawAdvisor, and the applicant believed that this engineering test could serve as an opportunity to learn Elixir and Phoenix.
 
+Initially Postgres was considered because it's the default of Phoenix but due to a lack of time and other factors, sqlite was used to simplify things. Traces of attempting to use Postgres though can be seen in the [dev.exs](todolist_api/config/dev.exs) file, wherein it switches the adapter to postgres when not in a development or testing environment.
+
+## Starting the Server
+These instructions assume Elixir is already installed, if not it can be installed [here](https://elixir-lang.org/install.html)
+
+
+> [!NOTE]
+> A Docker container w.as considered at first but due to a lack of time was not tested. The dockerfile and docker-compose.yml files are still in this repo, however.
+
+### Steps (assuming you are in the root directory)
+1. Go to the app directory: `cd todolist_api`
+2. Run `mix setup` to setup the database, run the seeder, and build the assets
+3. Start the server with `mix phx.server`
+4. The API can now be accessed on `localhost:4000/api`
+5. To confrim the database was seeded, the `localhost:4000/api/tasks` lists all the tasks in the database
+
+## Important Routes
+
+### API (`localhost:4000/api`)
+All the API routes are scoped under the `/api` prefix
+
+### API Docs (`localhost:4000/api/swagger`)
+A Swagger UI exists in this project to make it easier to test the different endpoints.
+
+## Requirements Checklist
 ### Main Endpoints
-- [ ] /tasks (get all)
-- [ ] /tasks/{id} (get one)
-- [ ] /tasks/{id} (patch)
-- [ ] /tasks/{id} (delete) (maybe add soft deleting? as a treat?)
+- [x] Get All
+- [x] Get
+- [x] Create
+- [x] Update
+- [x] Delete
+- [x] Reorder
 
 ### Other Tasks
-- [ ] Add reordering (maybe add a custom_id or custom_order field to the ToDoListItem?)
-
 - [ ] Should be able to handle 1M tasks in under 5 seconds
 
 ### Bonus Tasks
-- [ ] Add unit tests?
-- [ ] Make a frontend? (just so i have an excuse to try out the liveview and tailwind integration)
+- [x] Unit Tests
+- [x] Soft Deleting
+- [x] OpenAPI Spec
+- [ ] Make a Frontend
 
+## Issues Encountered
 
-## Notes
+## Future Improvements
 
-### Task/TodoListItem (maybe task is the better name)
-- id (auto increment)
-- description (string, default "")
-- is_completed (bool, default False)
-- deleted_on (if soft deleting is implemented)
-- inserted_on
-- updated_on
-- custom_order (default to id)
+## Notes on the Reorder Endpoint
 
-### How custom order could work
-- specify new position
-- set task to new position
-- if new_pos > old_pos: (old_pos, new_pos] - 1
-- if new_pos < old_pos: [new_pos, old_pos) + 1
-
-#### example (so it's easier to visualize):
-id:     0 1 2 3 4
-custom: 1 2 3 4 5
-
-move position 3 to position 5:
-set id  2 to pos 5
-(3,5] = 4,5 - 1
-0 1 3 4 2
-1 2 3 4 5
-
-move position 4 to position 1
-set id 4 to pos 1
-[1, 4) = 1,2,3 + 1
-4 0 1 3 2
-1 2 3 4 5
-
-
-## Commands to Run
-mix local.hex - install hex (dependency manager)
-mix archive.install hex phx_new - phoenix project generator
-mix phx.new todolist-api - new phoenix project
-mix phx.gen.context Tasks Task tasks description:string is_completed:boolean deleted_on:naive_datetime custom_order:integer - generate crud
-mix ecto.migrate
-mix hex.docs offline elixir
+## Additional Notes
+Additional notes on the development of this API can be found [here](todolist_api/priv/static/personal_notes.md).
+They mostly consist of stream of consciousness notes taken by the applicant to help organize their thoughts while working on this project.
