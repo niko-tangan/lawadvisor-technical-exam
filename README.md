@@ -37,6 +37,9 @@ These instructions assume Elixir is already installed, if not it can be installe
 
 ## Important Routes
 
+![Routes as seen in Swagger UI](todolist_api/priv/static/images/swagger_screenshot.png)
+*Screenshot of the Swagger UI for the Todo List API*
+
 ### API (`localhost:4000/api`)
 All the API routes are scoped under the `/api` prefix
 
