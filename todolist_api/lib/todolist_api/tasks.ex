@@ -48,9 +48,9 @@ defmodule TodolistApi.Tasks do
       ** (Ecto.NoResultsError)
 
   """
-  def get_task!(id, show_deleted \\ false) do
-    task = Repo.get!(Task, id)
-    if is_nil(task.deleted_at) || show_deleted do task else nil end
+  def get_task!(id, _show_deleted \\ false) do
+    Repo.get!(Task, id)
+    #if is_nil(task.deleted_at) || show_deleted do task else nil end
   end
 
   @doc """
