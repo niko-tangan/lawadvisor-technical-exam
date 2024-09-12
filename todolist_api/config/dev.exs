@@ -58,7 +58,8 @@ config :todolist_api, TodolistApiWeb.Endpoint,
     patterns: [
       ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",
       ~r"priv/gettext/.*(po)$",
-      ~r"lib/todolist_api_web/(controllers|live|components)/.*(ex|heex)$"
+      ~r"lib/todolist_api_web/(controllers|live|components)/.*(ex|heex)$",
+      ~r"priv/static/swagger.json",
     ]
   ]
 
