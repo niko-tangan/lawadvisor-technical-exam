@@ -93,6 +93,15 @@ defmodule TodolistApiWeb.TaskController do
     end
   end
 
+  swagger_path :delete do
+    PhoenixSwagger.Path.delete "/api/tasks/{id}"
+    summary "Deletes the Task with the given ID"
+    description "Deletes the Task with the given ID"
+    response 204, "Ok"
+    parameters do
+      id(:path, :integer, "Task ID", required: true, example: 3)
+    end
+  end
   def delete(conn, %{"id" => id}) do
     task = Tasks.get_task!(id)
 
@@ -101,6 +110,38 @@ defmodule TodolistApiWeb.TaskController do
     end
   end
 
+  swagger_path :soft_delete do
+    post "/api/tasks/{id}/soft_delete"
+    summary "Soft deletes the Task with the given ID"
+    description "Soft deletes the Task with the given ID. This currently only just sets the deleted_at field on the Task. "
+      <> "\nOther parts of the API would need to be changed to handle this field. "
+      <> "\nLike having a show_deleted parameter that determines whether or not soft deleted Tasks should show up in results."
+      <> "\nNOTE: currently has an issue where the return value isn't updated, but checking with the /tasks or /tasks{id} endpoint should show that it updated."
+    response 200, "Ok", Schema.ref(:Task)
+    produces "application/json"
+    parameters do
+      id(:path, :integer, "Task ID", required: true, example: 3)
+    end
+  end
+  def soft_delete(conn, %{"id" => id}) do
+    task = Tasks.get_task!(id)
+
+    with {:ok, %Task{}} <- Tasks.soft_delete_task(task) do
+      render(conn, :show, task: task)
+    end
+  end
+
+  swagger_path :reorder do
+    post "/api/tasks/{id}/reorder/{new_custom_order}"
+    summary "Reorder a Task"
+    description "Sets the custom_order of the Task with a given ID to the given new_custom_order"
+    response 200, "Ok", Schema.ref(:Task)
+    produces "application/json"
+    parameters do
+      id(:path, :integer, "Task ID", required: true, example: 3)
+      new_custom_order(:path, :integer, "New Custom Order", required: true, example: 10)
+    end
+  end
   def reorder(conn, %{"id" => id, "new_custom_order" => new_custom_order}) do
     task = Tasks.get_task!(id)
 
@@ -136,7 +177,7 @@ defmodule TodolistApiWeb.TaskController do
         }
       end,
       TaskItem: swagger_schema do
-        title "Task"
+        title "Task Item"
         description "A Task as rendered in a list"
         properties do
           id :integer, "The ID of the Task"

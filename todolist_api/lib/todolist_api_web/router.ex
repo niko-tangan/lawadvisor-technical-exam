@@ -25,6 +25,7 @@ defmodule TodolistApiWeb.Router do
     resources "/tasks", TaskController
     get "/ordered_tasks", TaskController, :ordered_tasks
     post "/tasks/:id/reorder/:new_custom_order", TaskController, :reorder
+    post "/tasks/:id/soft_delete", TaskController, :soft_delete
   end
 
   scope "/api/swagger" do

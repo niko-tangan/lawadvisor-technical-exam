@@ -1,5 +1,75 @@
 {
   "paths": {
+    "/api/tasks/{id}/soft_delete": {
+      "post": {
+        "tags": [
+          "Task"
+        ],
+        "summary": "Soft deletes the Task with the given ID",
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Task"
+            },
+            "description": "Ok"
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "x-example": 3,
+            "type": "integer",
+            "required": true,
+            "name": "id",
+            "in": "path",
+            "description": "Task ID"
+          }
+        ],
+        "operationId": "TodolistApiWeb.TaskController.soft_delete",
+        "description": "Soft deletes the Task with the given ID. This currently only just sets the deleted_at field on the Task. \nOther parts of the API would need to be changed to handle this field. \nLike having a show_deleted parameter that determines whether or not soft deleted Tasks should show up in results.\nNOTE: currently has an issue where the return value isn't updated, but checking with the /tasks or /tasks{id} endpoint should show that it updated."
+      }
+    },
+    "/api/tasks/{id}/reorder/{new_custom_order}": {
+      "post": {
+        "tags": [
+          "Task"
+        ],
+        "summary": "Reorder a Task",
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Task"
+            },
+            "description": "Ok"
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "x-example": 3,
+            "type": "integer",
+            "required": true,
+            "name": "id",
+            "in": "path",
+            "description": "Task ID"
+          },
+          {
+            "x-example": 10,
+            "type": "integer",
+            "required": true,
+            "name": "new_custom_order",
+            "in": "path",
+            "description": "New Custom Order"
+          }
+        ],
+        "operationId": "TodolistApiWeb.TaskController.reorder",
+        "description": "Sets the custom_order of the Task with a given ID to the given new_custom_order"
+      }
+    },
     "/api/tasks/{id}": {
       "patch": {
         "tags": [
@@ -73,6 +143,29 @@
         ],
         "operationId": "TodolistApiWeb.TaskController.show",
         "description": "Lists a Task with a given ID"
+      },
+      "delete": {
+        "tags": [
+          "Task"
+        ],
+        "summary": "Deletes the Task with the given ID",
+        "responses": {
+          "204": {
+            "description": "Ok"
+          }
+        },
+        "parameters": [
+          {
+            "x-example": 3,
+            "type": "integer",
+            "required": true,
+            "name": "id",
+            "in": "path",
+            "description": "Task ID"
+          }
+        ],
+        "operationId": "TodolistApiWeb.TaskController.delete",
+        "description": "Deletes the Task with the given ID"
       }
     },
     "/api/tasks/": {
@@ -210,7 +303,7 @@
     },
     "TaskItem": {
       "type": "object",
-      "title": "Task",
+      "title": "Task Item",
       "required": [
         "is_completed",
         "description"
