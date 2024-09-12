@@ -48,7 +48,10 @@ defmodule TodolistApi.Tasks do
       ** (Ecto.NoResultsError)
 
   """
-  def get_task!(id), do: Repo.get!(Task, id)
+  def get_task!(id, show_deleted \\ false) do
+    task = Repo.get!(Task, id)
+    if is_nil(task.deleted_at) || show_deleted do task else nil end
+  end
 
   @doc """
   Creates a task.
@@ -101,6 +104,22 @@ defmodule TodolistApi.Tasks do
   """
   def delete_task(%Task{} = task) do
     Repo.delete(task)
+  end
+
+  @doc """
+  Soft deletes a task.
+
+  ## Examples
+
+      iex> soft_delete_task(task)
+      {:ok, %Task{}}
+
+      iex> soft_delete_task(task)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def soft_delete_task(%Task{} = task) do
+    update_task(task, %{deleted_at: DateTime.utc_now()})
   end
 
   @doc """
