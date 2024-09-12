@@ -17,7 +17,8 @@ defmodule TodolistApiWeb.CoreComponents do
   use Phoenix.Component
 
   alias Phoenix.LiveView.JS
-  import TodolistApiWeb.Gettext
+  # import TodolistApiWeb.Gettext
+  use Gettext, backend: TodolistApiWeb.Gettext
 
   @doc """
   Renders a modal.
