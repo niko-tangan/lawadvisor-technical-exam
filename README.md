@@ -15,7 +15,7 @@ Technical Exam for LawAdvisor by Anton Nikolai Regis Tangan
 
 ## Summary
 This is an API for a ToDo List meant to serve as an engineering test for LawAdvisor.
-No specific programming language was specified, so the stack chosen was Elxir, specifically, the Phoenix Framework, and sqlite for the database. 
+No specific programming language was specified, so the stack chosen was Elixir, specifically, the Phoenix Framework, and sqlite for the database. 
 
 Phoenix was chosen as it is already being used by LawAdvisor, and the applicant believed that this engineering test could serve as an opportunity to learn Elixir and Phoenix.
 
@@ -95,6 +95,6 @@ Additional notes on the development of this API can be found [here](todolist_api
 They mostly consist of stream of consciousness notes taken by the applicant to help organize their thoughts while working on this project.
 
 ## Final Thoughts
-I enjoyed working on this engineering exam a lot. It gave me a chance to learn about Elxir and Phoenix. I appreciate that Phoenix has Tailwind as a dependency by default given that I'm a huge fan of Tailwind, and love working with it. It was nice to try something new; it was a lot of fun. So thanks a lot for the exam and for reading this!
+I enjoyed working on this engineering exam a lot. It gave me a chance to learn about Elixir and Phoenix. I appreciate that Phoenix has Tailwind as a dependency by default given that I'm a huge fan of Tailwind, and love working with it. It was nice to try something new; it was a lot of fun. So thanks a lot for the exam and for reading this!
 
 ***Niko Tangan***
