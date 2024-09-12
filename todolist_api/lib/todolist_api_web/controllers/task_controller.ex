@@ -27,6 +27,10 @@ defmodule TodolistApiWeb.TaskController do
 
   def show(conn, %{"id" => id}) do
     task = Tasks.get_task!(id)
+    conn = case task do
+      nil -> conn |> put_status(404)
+      _ -> conn
+    end
     render(conn, :show, task: task)
   end
 

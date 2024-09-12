@@ -12,7 +12,11 @@ defmodule TodolistApiWeb.TaskJSON do
   Renders a single task.
   """
   def show(%{task: task}) do
-    if not(is_nil(task)) do %{data: data(task)} else %{data: %{error: "Task does not exist"}} end
+    if not(is_nil(task)) do
+      %{data: data(task)}
+    else
+      %{error: "Task does not exist"}
+    end
   end
 
   defp data(%Task{} = task) do
