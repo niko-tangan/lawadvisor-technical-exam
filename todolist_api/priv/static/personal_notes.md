@@ -73,11 +73,11 @@ set id 4 to pos 1
 1 2 3 4 5
 
 ## Commands Cheatsheet (can refer to mix.exs to read more commands or add your own)?
-mix local.hex - install hex (dependency manager)
-mix archive.install hex phx_new - phoenix project generator
-mix phx.new todolist-api - new phoenix project
-mix phx.gen.context Tasks Task tasks description:string is_completed:boolean deleted_at:naive_datetime custom_order:integer - generate context
-mix phx.gen.html Tasks Task tasks description:string is_completed:boolean deleted_at:naive_datetime custom_order:integer --no-context --no-schema  - generate crud
-mix phx.gen.json Tasks Task tasks description:string is_completed:boolean deleted_at:naive_datetime custom_order:integer --no-context --no-schema  --web api - generate json api
-mix ecto.migrate - migrates db
-mix hex.docs offline elixir - downloads docs for offline viewing
+- mix local.hex - install hex (dependency manager)
+- mix archive.install hex phx_new - phoenix project generator
+- mix phx.new todolist-api - new phoenix project
+- mix phx.gen.context Tasks Task tasks description:string is_completed:boolean deleted_at:naive_datetime custom_order:integer - generate context
+- mix phx.gen.html Tasks Task tasks description:string is_completed:boolean deleted_at:naive_datetime custom_order:integer --no-context --no-schema  - generate crud
+- mix phx.gen.json Tasks Task tasks description:string is_completed:boolean deleted_at:naive_datetime custom_order:integer --no-context --no-schema  --web api - generate json api
+- mix ecto.migrate - migrates db
+- mix hex.docs offline elixir - downloads docs for offline viewing
