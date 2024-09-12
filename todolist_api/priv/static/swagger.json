@@ -1,6 +1,53 @@
 {
   "paths": {
     "/api/tasks/{id}": {
+      "patch": {
+        "tags": [
+          "Task"
+        ],
+        "summary": "Updates a Task with a given ID",
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Task"
+            },
+            "description": "Ok"
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "x-example": 3,
+            "type": "integer",
+            "required": true,
+            "name": "id",
+            "in": "path",
+            "description": "Task ID"
+          },
+          {
+            "x-example": {
+              "task": {
+                "is_completed": true,
+                "description": "Sample Updated Description"
+              }
+            },
+            "schema": {
+              "$ref": "#/definitions/UpdateTask"
+            },
+            "required": false,
+            "name": "task",
+            "in": "body",
+            "description": "The task details"
+          }
+        ],
+        "operationId": "TodolistApiWeb.TaskController.update",
+        "description": "Updates a Task with a given ID",
+        "consumes": [
+          "application/json"
+        ]
+      },
       "get": {
         "tags": [
           "Task"
@@ -28,6 +75,41 @@
         "description": "Lists a Task with a given ID"
       }
     },
+    "/api/tasks/": {
+      "post": {
+        "tags": [
+          "Task"
+        ],
+        "summary": "Creates a new Task",
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Task"
+            },
+            "description": "Ok"
+          }
+        },
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "$ref": "#/definitions/UpdateTask"
+            },
+            "required": false,
+            "name": "task",
+            "in": "body",
+            "description": "The task details"
+          }
+        ],
+        "operationId": "TodolistApiWeb.TaskController.create",
+        "description": "Creates a new Task",
+        "consumes": [
+          "application/json"
+        ]
+      }
+    },
     "/api/tasks": {
       "get": {
         "tags": [
@@ -46,10 +128,72 @@
         "operationId": "TodolistApiWeb.TaskController.index",
         "description": "List all Tasks"
       }
+    },
+    "/api/ordered_tasks": {
+      "get": {
+        "tags": [
+          "Task"
+        ],
+        "summary": "List all Tasks ordered by custom_order",
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Tasks"
+            },
+            "description": "Ok"
+          }
+        },
+        "parameters": [],
+        "operationId": "TodolistApiWeb.TaskController.ordered_tasks",
+        "description": "List all Tasks ordered by custom_order"
+      }
     }
   },
   "swagger": "2.0",
   "definitions": {
+    "UpdateTask": {
+      "type": "object",
+      "title": "Update Task",
+      "required": [
+        "is_completed",
+        "description"
+      ],
+      "properties": {
+        "is_completed": {
+          "type": "boolean",
+          "description": "Whether the Task is completed or not"
+        },
+        "description": {
+          "type": "string",
+          "description": "The description of the Task"
+        },
+        "deleted_at": {
+          "type": "string",
+          "format": "ISO-8601",
+          "description": "When the Task was completed"
+        },
+        "custom_order": {
+          "type": "integer",
+          "description": "The custom order of the Task"
+        }
+      },
+      "example": {
+        "task": {
+          "is_completed": false,
+          "description": "Task 3",
+          "custom_order": 2
+        }
+      },
+      "description": "An object with data to update on a Task"
+    },
+    "Tasks": {
+      "type": "array",
+      "title": "Tasks",
+      "items": {
+        "$ref": "#/definitions/TaskItem"
+      },
+      "description": "All tasks"
+    },
     "Error": {
       "type": "object",
       "title": "Errors",
@@ -64,13 +208,55 @@
       },
       "description": "Error responses from the ToDo List API"
     },
-    "Tasks": {
-      "type": "array",
-      "title": "Tasks",
-      "items": {
-        "$ref": "#/definitions/Task"
+    "TaskItem": {
+      "type": "object",
+      "title": "Task",
+      "required": [
+        "is_completed",
+        "description"
+      ],
+      "properties": {
+        "updated_at": {
+          "type": "string",
+          "format": "ISO-8601",
+          "description": "When the Task was last updated"
+        },
+        "is_completed": {
+          "type": "boolean",
+          "description": "Whether the Task is completed or not"
+        },
+        "inserted_at": {
+          "type": "string",
+          "format": "ISO-8601",
+          "description": "When the Task was initially inserted"
+        },
+        "id": {
+          "type": "integer",
+          "description": "The ID of the Task"
+        },
+        "description": {
+          "type": "string",
+          "description": "The description of the Task"
+        },
+        "deleted_at": {
+          "type": "string",
+          "format": "ISO-8601",
+          "description": "When the Task was completed"
+        },
+        "custom_order": {
+          "type": "integer",
+          "description": "The custom order of the Task"
+        }
       },
-      "description": "All tasks"
+      "example": {
+        "updated_at": "2024-09-11T18:32:10Z",
+        "is_completed": false,
+        "inserted_at": "2024-09-11T18:31:13Z",
+        "id": 3,
+        "description": "Task 3",
+        "custom_order": 2
+      },
+      "description": "A Task as rendered in a list"
     },
     "Task": {
       "type": "object",
@@ -114,9 +300,12 @@
       },
       "example": {
         "data": {
+          "updated_at": "2024-09-11T18:32:10Z",
           "is_completed": false,
-          "description": "Sample Task Description",
-          "custom_order": 17
+          "inserted_at": "2024-09-11T18:31:13Z",
+          "id": 3,
+          "description": "Task 3",
+          "custom_order": 2
         }
       },
       "description": "A Task on the ToDo List"

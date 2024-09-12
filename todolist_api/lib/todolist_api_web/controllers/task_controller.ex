@@ -18,18 +18,15 @@ defmodule TodolistApiWeb.TaskController do
     render(conn, :index, tasks: tasks)
   end
 
+  swagger_path :ordered_tasks do
+    get "/api/ordered_tasks"
+    summary "List all Tasks ordered by custom_order"
+    description "List all Tasks ordered by custom_order"
+    response 200, "Ok", Schema.ref(:Tasks)
+  end
   def ordered_tasks(conn, _params) do
     tasks = Tasks.list_ordered_tasks()
     render(conn, :index, tasks: tasks)
-  end
-
-  def create(conn, %{"task" => task_params}) do
-    with {:ok, %Task{} = task} <- Tasks.create_task(task_params) do
-      conn
-      |> put_status(:created)
-      |> put_resp_header("location", ~p"/api/tasks/#{task}")
-      |> render(:show, task: task)
-    end
   end
 
   swagger_path :show do
@@ -50,6 +47,44 @@ defmodule TodolistApiWeb.TaskController do
     render(conn, :show, task: task)
   end
 
+  swagger_path :create do
+    post "/api/tasks/"
+    summary "Creates a new Task"
+    description "Creates a new Task"
+    response 200, "Ok", Schema.ref(:Task)
+    consumes "application/json"
+    produces "application/json"
+    parameters do
+      task(:body, Schema.ref(:UpdateTask), "The task details")
+    end
+  end
+  def create(conn, %{"task" => task_params}) do
+    with {:ok, %Task{} = task} <- Tasks.create_task(task_params) do
+      conn
+      |> put_status(:created)
+      |> put_resp_header("location", ~p"/api/tasks/#{task}")
+      |> render(:show, task: task)
+    end
+  end
+
+  swagger_path :update do
+    patch "/api/tasks/{id}"
+    summary "Updates a Task with a given ID"
+    description "Updates a Task with a given ID"
+    response 200, "Ok", Schema.ref(:Task)
+    consumes "application/json"
+    produces "application/json"
+    parameters do
+      id(:path, :integer, "Task ID", required: true, example: 3)
+      task(:body, Schema.ref(:UpdateTask), "The task details",
+        example: %{
+          task: %{
+            description: "Sample Updated Description", is_completed: true
+          }
+        }
+      )
+    end
+  end
   def update(conn, %{"id" => id, "task" => task_params}) do
     task = Tasks.get_task!(id)
 
@@ -90,17 +125,60 @@ defmodule TodolistApiWeb.TaskController do
         end
         example %{
           data: %{
-            description: "Sample Task Description",
+            id: 3,
+            description: "Task 3",
             is_completed: false,
-            custom_order: 17
+            custom_order: 2,
+            inserted_at: "2024-09-11T18:31:13Z",
+            updated_at: "2024-09-11T18:32:10Z",
+            deleted_at: nil
           }
         }
+      end,
+      TaskItem: swagger_schema do
+        title "Task"
+        description "A Task as rendered in a list"
+        properties do
+          id :integer, "The ID of the Task"
+          description :string, "The description of the Task", required: true
+          is_completed :boolean, "Whether the Task is completed or not", required: true
+          custom_order :integer, "The custom order of the Task"
+          inserted_at :string, "When the Task was initially inserted", format: "ISO-8601"
+          updated_at :string, "When the Task was last updated", format: "ISO-8601"
+          deleted_at :string, "When the Task was completed", format: "ISO-8601"
+        end
+        example %{
+            id: 3,
+            description: "Task 3",
+            is_completed: false,
+            custom_order: 2,
+            inserted_at: "2024-09-11T18:31:13Z",
+            updated_at: "2024-09-11T18:32:10Z",
+            deleted_at: nil
+        }
+      end,
+      UpdateTask: swagger_schema do
+        title "Update Task"
+        description "An object with data to update on a Task"
+        properties do
+          description :string, "The description of the Task", required: true
+          is_completed :boolean, "Whether the Task is completed or not", required: true
+          custom_order :integer, "The custom order of the Task"
+          deleted_at :string, "When the Task was completed", format: "ISO-8601"
+        end
+        example %{
+          task: %{
+            description: "Task 3",
+            is_completed: false,
+            custom_order: 2,
+          }
+      }
       end,
       Tasks: swagger_schema do
         title "Tasks"
         description "All tasks"
         type :array
-        items Schema.ref(:Task)
+        items Schema.ref(:TaskItem)
       end,
       Error: swagger_schema do
         title "Errors"
