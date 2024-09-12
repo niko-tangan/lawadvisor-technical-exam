@@ -61,8 +61,15 @@ A Swagger UI exists in this project to make it easier to test the different endp
 - [ ] Make a Frontend
 
 ## Issues Encountered
+A lot of the issues encountered came about from being new to using both Phoenix and Elixir. Most of the development time was spent on learning how to do certain things in Elixir.
+
+One of the main issues was from the FallbackController. It did not have a generic test with a Changeset argument, which made some tests fail when running `mix test`.
+This issue was fixed after seeing how the FallbackController was implemented in the Phoenix documentation.
+
+Another issue came from figuring out the `/reorder` endpoint. The algorithm was already designed when receiving these requirements, but learning how exactly to implement them and learning how to use Ecto took up a substantial amount of time.
 
 ## Future Improvements
+
 
 ## Notes on the Reorder Endpoint
 
