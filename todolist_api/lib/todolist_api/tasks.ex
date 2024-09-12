@@ -149,8 +149,5 @@ defmodule TodolistApi.Tasks do
     |> Repo.update_all([])
 
     update_task(task, %{custom_order: new_custom_order})
-    # task
-    # |> Task.changeset(%{custom_order: new_custom_order})
-    # |> Repo.update()
   end
 end
