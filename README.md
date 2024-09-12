@@ -26,7 +26,7 @@ These instructions assume Elixir is already installed, if not it can be installe
 
 
 > [!NOTE]
-> A Docker container w.as considered at first but due to a lack of time was not tested. The dockerfile and docker-compose.yml files are still in this repo, however.
+> A Docker container was considered at first but due to a lack of time was not tested. The dockerfile and docker-compose.yml files are still in this repo, however.
 
 ### Steps (assuming you are in the root directory)
 1. Go to the app directory: `cd todolist_api`
@@ -82,7 +82,7 @@ Another issue came from figuring out the `/reorder` endpoint. The algorithm was 
 The other requirement of *"Should be able to handle 1M tasks in under 5 seconds"* was also not properly tested.
 
 ## Future Improvements
-An improvment that could be made to this API would be to add proper authentication. Like requiring a Bearer token when consuming the endpoints.
+An improvement that could be made to this API would be to add proper authentication. Like requiring a Bearer token when consuming the endpoints.
 
 Another database like Postgres could have also been used instead of sqlite. It's already the default database used by Phoenix, and it would help if the project were to increase in size and scope. Though for now sqlite should be fine as this is a small project.
 
