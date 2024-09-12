@@ -56,21 +56,25 @@ Just need to finish the readme and move this dev log type thing somewhere else.
 - if new_pos > old_pos: (old_pos, new_pos] - 1
 - if new_pos < old_pos: [new_pos, old_pos) + 1
 
-#### example (so it's easier to visualize):
-id:     0 1 2 3 4
-custom: 1 2 3 4 5
+#### Examples (so it's easier to visualize):
 
-move position 3 to position 5:
-set id  2 to pos 5
-(3,5] = 4,5 - 1
-0 1 3 4 2
-1 2 3 4 5
+##### Starting Data
+- id:     0 1 2 3 4
+- custom: 1 2 3 4 5
 
-move position 4 to position 1
-set id 4 to pos 1
-[1, 4) = 1,2,3 + 1
-4 0 1 3 2
-1 2 3 4 5
+##### Example 1
+- move position 3 to position 5:
+- set id  2 to pos 5
+- (3,5] = 4,5 - 1
+- 0 1 3 4 2 (ids)
+- 1 2 3 4 5 (custom_order)
+
+##### Example 2
+- move position 4 to position 1
+- set id 4 to pos 1
+- [1, 4) = 1,2,3 + 1
+- 4 0 1 3 2 (ids)
+- 1 2 3 4 5 (custom_order)
 
 ## Commands Cheatsheet (can refer to mix.exs to read more commands or add your own)?
 - mix local.hex - install hex (dependency manager)
